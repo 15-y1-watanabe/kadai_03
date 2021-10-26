@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>myMemoPad</title>
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+</head>
+<body>
+<header>
+    <h1>MemoPad</h1>
+</header>
+<main>
+    <table>
+        <tr>
+            <th>メモ</th>
+            <td>
+            <input type="text" id="key" class="memo__form"></td>
+        </tr>
+
+        <tr>
+            <th>コメント</th>
+            <td>
+                <textarea id="memo"　class="text__form"></textarea></td>
+        </tr>
+    </table>
+
+    <ul>
+        <li id="save">Save</li>
+        <li id="clear">Clear</li>
+    </ul>
+</main>
+<table id="list">
+<!-- ここに追加データが挿入される -->       
+<tr>
+    <th>メモ</th>
+    <th>コメント</th>
+
+</tr>
+</table>
+
+</div>
+<script>
+
+//1.Save クリックイベント
+$("#save").on("click", function(){
+    // alert("OK");
+    // データを定数に入れる
+    const key = $("#key").val();
+
+    // メモデータを定数に入れる
+    const value = $("#memo").val();
+
+    console.log(key);
+    console.log(value);
+
+    //データをlocalStrageに保存する
+    localStorage.setItem(key, value);
+
+    // フォームの中身を空っぽにする
+    $("#key").val("");
+    $("#memo").val("");
+
+
+
+
+    // データをブラウザに表示する処理(１０回に１回くらいの確率でさぼる機能搭載)
+    const html = `
+                <tr>
+                    <th>${key}</th>
+                    <th>${value}</th>
+                </th>
+                    `
+    const html2 = `
+                <tr>
+                    <th>　</th>
+                    <th>　</th>
+                </th>
+                    `
+    const rand = Math.floor(Math.random() *10);
+    console.log(rand);
+    if(rand >= 1 && 9 >= rand){
+        $("#list").append(html);
+    }else if(rand == 0){
+        $("#list").append(html2);;
+        // サボりか所がわかるように"Skip"文字列をコンソールに表示
+        console.log("Skip") 
+    }                
+
+});
+
+
+
+
+//2.clear クリックイベント
+$("#clear").on("click", function(){
+    // alert("OK");
+    // ローカルストレージのデータ削除
+    localStorage.clear();
+
+    // HTMLのデータも削除
+    $("#list").empty();
+});
+
+
+
+
+
+
+
+</script>
+<footer><small>Yuta's Academy</small></footer>
+</body>
+</html>
